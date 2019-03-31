@@ -1,7 +1,7 @@
 'use strict'
 
 const less = require('gulp-less'),
-      {src, dest, watch} = require('gulp'),
+      {src, dest, watch, series} = require('gulp'),
       concat = require('gulp-concat')
 
 function defaultTask(cb){
@@ -9,14 +9,14 @@ function defaultTask(cb){
   cb()
 }
 
-function makeStyle(cb){
+function style(cb){
   return src(['assets/style/*.less', 'assets/components/*/*.less'])
   .pipe(concat('style.less'))
   .pipe(less())
   .pipe(dest('assets/style/'))
 }
 
-watch(['assets/style/*.less', 'assets/components/*/*.less'], makeStyle)
+watch(['assets/style/*.less', 'assets/components/*/*.less'], style)
 
-exports.default = defaultTask
-exports.style = makeStyle
+exports.style = style
+exports.default = series(style)

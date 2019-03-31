@@ -39,12 +39,34 @@ class DB {
     })
   }
 
+  getEntry(id){
+    return new Promise((resolve, reject) => {
+      const t = typeof id
+      switch(t){
+        case 'string': id = parseInt(id, 10); break
+        case 'number': break
+        default: return reject(); break
+      }
+      
+      var transaction = this.db.transaction(['vins'], 'readonly'),
+          coll = transaction.objectStore('vins'),
+          req = coll.get(id),
+          entry
+
+      req.onsuccess = (e) => {
+        entry = e.target.result
+      }
+      transaction.oncomplete = (e) => { resolve(entry) }
+      transaction.onerror = reject
+    })
+  }
+
   saveEntry(entry){
     var transaction = this.db.transaction(['vins'], 'readwrite'),
         collection = transaction.objectStore('vins'),
-        req = collection.add(entry)
+        req = collection.add(entry),
+        newKey
 
-    var newKey
     req.onsuccess = (e) => {
       newKey = e.target.result
       console.log('success, new key: ' + newKey)

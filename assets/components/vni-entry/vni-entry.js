@@ -5,10 +5,10 @@ const Entry = Vue.component('vni-entry', {
     return {
       entry: {
         // id: 1,
-        appellation: 'St-Joseph',
-        producer: 'Domaine de la Ville rouge',
-        name: 'Cuvée du Potier',
-        year: '2016',
+        appellation: '',
+        producer: '',
+        name: '',
+        year: '',
         country: 'France',
         apogeeStart: null,
         apogeeEnd: null,
@@ -22,9 +22,18 @@ const Entry = Vue.component('vni-entry', {
     }
   },
 
-  mounted: function(){
-    console.log('entry mounted')
+  mounted: async function(){
+    // console.log('entry mounted: ' + this.$route.params.id)
+    if (!this.$route.params.id)
+      return
 
+    await db.connected
+    try{
+      this.entry = await db.getEntry(this.$route.params.id)
+    }
+    catch(err){
+      console.error(err)
+    }
   },
   methods: {
     save: async function(){
@@ -61,7 +70,6 @@ const Entry = Vue.component('vni-entry', {
         <label>Cuvée</label>
         <input v-model="entry.name">
       </div>
-
 
       <div class="field">
         <label>Millésime</label>

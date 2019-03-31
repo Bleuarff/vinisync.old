@@ -6,13 +6,14 @@ const DB_VERSION = 2,
 class DB {
   constructor(){
     this.db = null
+    this.connected = null
   }
 
   open(){
     if (!window.indexedDB)
       throw new Error('indexedDB is not supported')
 
-    return new Promise((resolve, reject) => {
+    this.connected = new Promise((resolve, reject) => {
       const request = window.indexedDB.open(DB_NAME, DB_VERSION)
       request.onerror = event => {
         reject(event.target.errorCode)
@@ -27,6 +28,7 @@ class DB {
         resolve()
       }
     })
+    return this.connected
   }
 
   _defineSchema(){
@@ -57,8 +59,6 @@ class DB {
       transaction.oncomplete = () => {resolve(newKey)}
       transaction.onerror = reject
     })
-    // req.onsuccess =
-
   }
 
   getEntries(){

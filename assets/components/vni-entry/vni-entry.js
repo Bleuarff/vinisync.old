@@ -21,6 +21,11 @@ const Entry = Vue.component('vni-entry', {
       }
     }
   },
+
+  mounted: function(){
+    console.log('entry mounted')
+
+  },
   methods: {
     save: async function(){
       try{

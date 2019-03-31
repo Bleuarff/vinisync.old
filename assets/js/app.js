@@ -3,7 +3,8 @@
 const routes = [
   { path: '/', redirect: '/cave' },
   { path: '/cave', component: Cave },
-  { path: '/entry', component: Entry}
+  { name: 'entry', path: '/entry/:id?', component: Entry},
+  { path: '*', component: Err404 }
 ]
 
 const router = new VueRouter({
@@ -13,9 +14,8 @@ const router = new VueRouter({
 const vm = new Vue({
   router,
   data: {
-    // db: null
   },
-  mounted: async function(){
+  created: async function(){
     window.db = new DB()
     try {
       await window.db.open()

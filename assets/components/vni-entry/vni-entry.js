@@ -3,7 +3,8 @@
 const Entry = Vue.component('vni-entry', {
   data: function(){
     return {
-      entry: {
+      entry: {},
+      default: {
         // id: 1,
         appellation: '',
         producer: '',
@@ -21,25 +22,40 @@ const Entry = Vue.component('vni-entry', {
       }
     }
   },
-
-  mounted: async function(){
-    // console.log('entry mounted: ' + this.$route.params.id)
-    if (!this.$route.params.id)
-      return
-
-    await db.connected
-    try{
-      this.entry = await db.getEntry(this.$route.params.id)
-    }
-    catch(err){
-      console.error(err)
+  watch: {
+    $route: function(to){
+      // console.log('route updated')
+      this.getEntry(to.params.id)
     }
   },
+
+  mounted: async function(){
+    this.getEntry(this.$route.params.id)
+  },
   methods: {
+    getEntry: async function(id){
+      if (!id){
+        this.entry = {...this.default}
+        return
+      }
+
+      await db.connected
+      try{
+        this.entry = await db.getEntry(id)
+      }
+      catch(err){
+        console.error(err)
+      }
+    },
     save: async function(){
       try{
-        let newId = await db.saveEntry(this.entry)
-        console.debug('save ok ! new id ' + newId)
+        if (this.$route.params.id){
+          console.debug('TODO: update item')
+        }
+        else {
+          let newId = await db.saveEntry(this.entry)
+          this.$router.push(`/entry/${newId}`)
+        }
       }
       catch(err){
         console.error(err)
@@ -85,7 +101,7 @@ const Entry = Vue.component('vni-entry', {
 
       <div class="field">
         <button v-on:click="cancel">Annuler</button>
-        <button v-on:click="save">Créer</button>
+        <button v-on:click="save">{{$route.params.id ? 'Sauvegarder' : 'Créer'}}</button>
       </div>
 
     </div>

@@ -6,6 +6,8 @@
 @white: yellow;
 @rose: pink;
 
+@max-width: 700px;
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -13,11 +15,37 @@
 body {
   margin: auto;
   width: 100%;
-  max-width: 700px;
+  max-width: @max-width;
   color: @text-color;
 }
 
 a {
   color: @text-color;
   text-decoration: underline;
+}
+
+.fab{
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 2em;
+  height: 2em;
+  color: white;
+  background-color: @main-color;
+  border-radius: 100%;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+
+@media (min-width: (@max-width + 65px)){
+  .fab{
+    right: calc(~ '(100% - @{max-width})/2');
+  }
+}
+
+@media (max-width: 700px){
+
 }

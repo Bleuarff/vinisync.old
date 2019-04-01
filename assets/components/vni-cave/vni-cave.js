@@ -25,7 +25,7 @@ const Cave = Vue.component('vni-cave', {
   template: `
     <div id="cave">
       <h2>Cave</h2>
-      <router-link to="/entry">Nouvelle entrée</router-link>
+      <router-link to="/entry" class="fab"><i class="icon-plus"></i></router-link>
 
       Dans votre cave: {{entries.length}} entrées et {{bottleCount}} bouteilles.
 

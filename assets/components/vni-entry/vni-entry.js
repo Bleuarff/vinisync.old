@@ -3,28 +3,30 @@
 const Entry = Vue.component('vni-entry', {
   data: function(){
     return {
-      entry: {},
+      entry: {wine: {}},
       default: {
         // id: 1,
-        appellation: '',
-        producer: '',
-        name: '',
-        year: '',
-        country: 'France',
-        apogeeStart: null,
-        apogeeEnd: null,
-        cepages: [],
-        containing: '75cl',
-        color: null,
-        location: null,
-        sweet: false,
-        sparkling: false
+        wine: {
+          appellation: '',
+          producer: '',
+          name: '',
+          year: '',
+          country: 'France',
+          apogeeStart: null,
+          apogeeEnd: null,
+          cepages: [],
+          containing: '75cl',
+          color: '',
+          location: null,
+          sweet: false,
+          sparkling: false
+        },
+        count: 6
       }
     }
   },
   watch: {
     $route: function(to){
-      // console.log('route updated')
       this.getEntry(to.params.id)
     }
   },
@@ -50,7 +52,8 @@ const Entry = Vue.component('vni-entry', {
     save: async function(){
       try{
         if (this.$route.params.id){
-          console.debug('TODO: update item')
+          await db.updateEntry(this.entry)
+          console.log(`updated ${this.$route.params.id}`)
         }
         else {
           let newId = await db.saveEntry(this.entry)
@@ -61,9 +64,6 @@ const Entry = Vue.component('vni-entry', {
         console.error(err)
       }
     },
-    cancel: function(){
-
-    }
   },
 
   template: `
@@ -74,35 +74,45 @@ const Entry = Vue.component('vni-entry', {
 
       <div class="field">
         <label>Appellation</label>
-        <input v-model="entry.appellation">
+        <input v-model="entry.wine.appellation">
       </div>
 
       <div class="field">
         <label>Producteur</label>
-        <input v-model="entry.producer">
+        <input v-model="entry.wine.producer">
       </div>
 
       <div class="field">
         <label>Cuvée</label>
-        <input v-model="entry.name">
+        <input v-model="entry.wine.name">
       </div>
 
       <div class="field">
         <label>Millésime</label>
-        <input v-model="entry.year">
+        <input v-model="entry.wine.year">
       </div>
 
 
       <div class="field">
         <label>Pays</label>
-        <input v-model="entry.country">
+        <input v-model="entry.wine.country">
+      </div>
+
+      <div class="field">
+        <label>Couleur</label>
+        <select v-model="entry.wine.color">
+          <option value="red">Rouge</option>
+          <option value="white">Blanc</option>
+          <option value="rose">Rosé</option>
+        </select>
       </div>
 
 
       <div class="field">
-        <button v-on:click="cancel">Annuler</button>
+        <button v-on:click="$router.go(-1)">Annuler</button>
         <button v-on:click="save">{{$route.params.id ? 'Sauvegarder' : 'Créer'}}</button>
       </div>
+
 
     </div>
   `

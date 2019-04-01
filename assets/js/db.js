@@ -45,9 +45,9 @@ class DB {
       switch(t){
         case 'string': id = parseInt(id, 10); break
         case 'number': break
-        default: return reject(); break
+        default: return reject(new Error('invalid id')); break
       }
-      
+
       var transaction = this.db.transaction(['vins'], 'readonly'),
           coll = transaction.objectStore('vins'),
           req = coll.get(id),
@@ -57,28 +57,6 @@ class DB {
         entry = e.target.result
       }
       transaction.oncomplete = (e) => { resolve(entry) }
-      transaction.onerror = reject
-    })
-  }
-
-  saveEntry(entry){
-    var transaction = this.db.transaction(['vins'], 'readwrite'),
-        collection = transaction.objectStore('vins'),
-        req = collection.add(entry),
-        newKey
-
-    req.onsuccess = (e) => {
-      newKey = e.target.result
-      console.log('success, new key: ' + newKey)
-      // console.log(e)
-    }
-    req.onerror = (e) => {
-      console.error('add request error: ')
-      console.error(e)
-    }
-
-    return new Promise((resolve, reject) => {
-      transaction.oncomplete = () => {resolve(newKey)}
       transaction.onerror = reject
     })
   }
@@ -100,4 +78,50 @@ class DB {
       }
     })
   }
+
+  saveEntry(entry){
+    if (!entry) return Promise.reject(new Error('entry is undefined'))
+
+    var transaction = this.db.transaction(['vins'], 'readwrite'),
+        collection = transaction.objectStore('vins'),
+        req = collection.add(entry),
+        newKey
+
+    req.onsuccess = (e) => {
+      newKey = e.target.result
+      console.log('success, new key: ' + newKey)
+      // console.log(e)
+    }
+    req.onerror = (e) => {
+      console.error('add request error: ')
+      console.error(e)
+    }
+
+    return new Promise((resolve, reject) => {
+      transaction.oncomplete = () => {resolve(newKey)}
+      transaction.onerror = reject
+    })
+  }
+
+  updateEntry(entry){
+    if (!entry) return Promise.reject(new Error('entry is undefined'))
+
+    return new Promise(async (resolve, reject) => {
+      var transaction = this.db.transaction(['vins'], 'readwrite'),
+          coll = transaction.objectStore('vins'),
+          req = coll.get(entry.id),
+          result
+
+      await new Promise((resolve, reject) => {
+        req.onsuccess = resolve
+        req.onerror = reject
+      })
+      // result.target.result = entry
+
+       coll.put(entry)
+       transaction.oncomplete = (e) => {resolve(entry)}
+       transaction.onerror = reject
+    })
+  }
+
 }

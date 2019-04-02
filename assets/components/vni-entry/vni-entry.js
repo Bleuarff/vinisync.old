@@ -74,22 +74,34 @@ const Entry = Vue.component('vni-entry', {
 
       <div class="field">
         <label>Appellation</label>
-        <input v-model="entry.wine.appellation">
+        <input v-model="entry.wine.appellation" class="wide">
       </div>
 
       <div class="field">
         <label>Producteur</label>
-        <input v-model="entry.wine.producer">
+        <input v-model="entry.wine.producer" class="wide">
       </div>
 
       <div class="field">
         <label>Cuvée</label>
-        <input v-model="entry.wine.name">
+        <input v-model="entry.wine.name" class="wide">
       </div>
 
-      <div class="field">
-        <label>Millésime</label>
-        <input v-model="entry.wine.year">
+      <div class="years">
+        <div class="field">
+          <label>Millésime</label>
+          <input v-model.number="entry.wine.year">
+        </div>
+
+        <div class="field">
+          <label>Apogée</label>
+          <div class="apogee">
+            <span class="label">de</span>
+            <input v-model.number="entry.wine.apogeeStart">
+            <span class="label">à</span>
+            <input v-model.number="entry.wine.apogeeEnd">
+          </div>
+        </div>
       </div>
 
 
@@ -100,12 +112,9 @@ const Entry = Vue.component('vni-entry', {
 
       <div class="field">
         <label>Couleur</label>
-        <select v-model="entry.wine.color">
-          <option value="red">Rouge</option>
-          <option value="white">Blanc</option>
-          <option value="rose">Rosé</option>
-        </select>
+        <vni-color v-model="entry.wine.color"></vni-color>
       </div>
+
 
 
       <div class="field">

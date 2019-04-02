@@ -1,0 +1,58 @@
+#entry{
+
+}
+
+@media (max-width: 700px){
+  #entry{
+    padding: 0 10px;
+
+    .field{
+      margin-bottom: .8em;
+    }
+
+    .wide{
+      width: 100%;
+    }
+
+    label{
+      display: block;
+      font-size: 13px;
+    }
+
+    .label{
+      font-size: 13px;
+    }
+
+    .years{
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+
+      .apogee{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      input {
+        display: inline-block;
+        width: 6em;
+      }
+
+      .label{
+        padding: 0 8px;
+
+        &:first-child{
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 701px){
+  #entry{
+
+  }
+}

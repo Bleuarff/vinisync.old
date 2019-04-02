@@ -1,0 +1,39 @@
+#colorpick{
+  display: flex;
+  flex-flow: row;
+
+  .red{
+    background: @red;
+    color: white;
+  }
+  .white{
+    background: @white;
+  }
+  .rose{
+    background: @rose;
+  }
+
+  .selected {
+    border-color: grey;
+  }
+
+  & > div {
+    width: 31%;
+    max-width: 13em;
+    border-radius: 4px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: .9em 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    border: 8px solid transparent;
+  }
+}
+
+@media (max-width: 700px){
+  #colorpick{
+    justify-content: space-between;
+  }
+}

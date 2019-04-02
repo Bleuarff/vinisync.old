@@ -68,9 +68,9 @@ const Entry = Vue.component('vni-entry', {
 
   template: `
     <div id="entry">
-      <h2>Entrée</h2>
+      <router-link to="/cave" class="icon-back">Cave</router-link>
 
-      <router-link to="/cave">Cave</router-link>
+      <h1>Entrée</h1>
 
       <div class="field">
         <label>Appellation</label>
@@ -104,8 +104,7 @@ const Entry = Vue.component('vni-entry', {
         </div>
       </div>
 
-
-      <div class="field">
+      <div class="field country">
         <label>Pays</label>
         <input v-model="entry.wine.country">
       </div>

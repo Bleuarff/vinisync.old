@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cepages editor test</title>
+    <script src="/assets/lib/vue.js"></script>
+    <script src="/assets/components/vni-cepages/vni-cepages.js"></script>
+    <link rel="stylesheet" href="/assets/style/style.css">
+  </head>
+  <body>
+    <div id="app">
+    </div>
+  </body>
+
+  <script>
+    const vm = new Vue({
+      template: `
+        <div>
+          <label>Cépages</label><br>
+
+          <vni-cepages :cepages="cepages"></vni-cepages>
+
+          <div v-for="cpg in cepages">{{cpg}}</div>
+        </div>
+      `,
+      data: {
+        cepages: ['syrah', 'grenache']
+      }
+    })
+    vm.$mount('#app')
+  </script>
+</html>

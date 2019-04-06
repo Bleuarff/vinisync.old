@@ -11,21 +11,44 @@
     align-items: flex-start;
     background: #bdbdbd;
     width: 100%;
-    // border: 1px solid;
-    padding: 5px;
+    padding: 5px 5px 20px 5px;
     font-size: .9em;
   }
 
   .cpg {
+    padding: 5px 8px;
+    margin: 3px 8px 5px 0;
+    line-height: 19px;
+    border-radius: 4px;
     background: @main-color;
     color: white;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
+  .lenref(){
+    border: none;
+    line-height: 19px;
     padding: 5px 8px;
-    border-radius: 4px;
-    margin: 3px 8px 5px 0;
+    font-family: Arial;
+    font-size: 1em;
   }
 
   #editor{
-    outline: none;
+    .lenref();
+    width: 4em;
+    margin-top: 3px;
+    border-radius: 6px;
+    outline-color: @main-color;
+    background: @main-color;
+    color: white;
+  }
+
+  #lenref{
+    .lenref();
+    color: transparent;
+    background: transparent;
+    margin: 0;
+    position: absolute;
   }
 }

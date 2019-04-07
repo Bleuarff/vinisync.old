@@ -162,9 +162,9 @@ const Entry = Vue.component('vni-entry', {
 
 
 
-      <div class="field">
-        <button v-on:click="$router.go(-1)">Annuler</button>
-        <button v-on:click="save">{{$route.params.id ? 'Sauvegarder' : 'Créer'}}</button>
+      <div class="field btns">
+        <button class="btn" v-on:click="$router.go(-1)">Annuler</button>
+        <button class="btn" v-on:click="save">{{$route.params.id ? 'Sauvegarder' : 'Créer'}}</button>
       </div>
 
 

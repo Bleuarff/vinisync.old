@@ -7,6 +7,16 @@
   .field{
 
   }
+
+  .btn{
+    color: white;
+    background: @main-color;
+    border: none;
+    border-radius: 4px;
+    padding: .7em .5em;
+    font-size: 1.1em;
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 700px){
@@ -79,11 +89,25 @@
       }
     }
 
+    .btns{
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+    }
+
+    .btn{
+      width: calc(50% - 0.7em);
+      max-width: 15em;
+    }
+
+
   }
 }
 
 @media (min-width: 701px){
   #entry{
-
+    .btn{
+      width: 40%;
+    }
   }
 }

@@ -1,4 +1,6 @@
 #entry{
+  margin-bottom: 3em;
+
   .country input {
     width: 100%;
     max-width: @max-width;
@@ -8,14 +10,34 @@
 
   }
 
+  &.edit{
+    margin-bottom: 0.4em;;
+    .btns{
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      margin: 2em 0 0 0;
+    }
+  }
+
+  .btns{
+    display: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .btn{
     color: white;
     background: @main-color;
     border: none;
     border-radius: 4px;
     padding: .7em .5em;
-    font-size: 1.1em;
+    font-size: 1.2em;
     cursor: pointer;
+  }
+
+  .value{
+    font-size: 1.1em;
   }
 }
 
@@ -90,9 +112,7 @@
     }
 
     .btns{
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
+
     }
 
     .btn{

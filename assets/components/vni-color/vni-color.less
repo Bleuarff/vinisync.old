@@ -17,7 +17,7 @@
     border-color: grey;
   }
 
-  & > div {
+  .red, .white, .rose {
     width: 31%;
     max-width: 13em;
     border-radius: 4px;
@@ -28,7 +28,29 @@
     -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
-    border: 8px solid transparent;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent;
+
+    &.selected{
+      border-color: grey;
+    }
+  }
+
+  &:not(.edit){
+
+    .red, .white, .rose{
+      cursor: default;
+    }
+
+    .selected{
+      border-color: transparent;
+    }
+    :not(.selected){
+      color: transparent;
+      background: transparent;
+
+    }
   }
 }
 

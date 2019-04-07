@@ -4,8 +4,7 @@ const Entry = Vue.component('vni-entry', {
   data: function(){
     return {
       entry: {wine: {}},
-      default: {
-        // id: 1,
+      default: { // default entry
         wine: {
           appellation: '',
           producer: '',
@@ -22,12 +21,22 @@ const Entry = Vue.component('vni-entry', {
         },
         count: 6,
         location: '',
-      }
+      },
+      edit: false, // edit mode toggle
     }
   },
   watch: {
     $route: function(to){
       this.getEntry(to.params.id)
+    }
+  },
+  computed: {
+    containingLbl: function(){
+      const v = parseFloat(this.entry.wine.containing)
+      if (v < 1)
+        return `${v * 100} cl`
+      else
+        return `${v} l`
     }
   },
 
@@ -38,6 +47,7 @@ const Entry = Vue.component('vni-entry', {
     getEntry: async function(id){
       if (!id){
         this.entry = {...this.default}
+        this.edit = true
         return
       }
 
@@ -69,7 +79,7 @@ const Entry = Vue.component('vni-entry', {
   },
 
   template: `
-    <div id="entry">
+    <div id="entry" :class="{edit: edit}">
       <router-link to="/cave" class="icon-back">Cave</router-link>
 
       <h1>Entrée</h1>
@@ -77,55 +87,64 @@ const Entry = Vue.component('vni-entry', {
       <div class="line">
         <div class="field count">
           <label>Bouteilles</label>
-          <input v-model.number="entry.count">
+          <input v-if="edit" v-model.number="entry.count">
+          <span v-else class="value">{{entry.count}}</span>
         </div>
 
         <div class="field">
           <label>Emplacement</label>
-          <input type="text" v-model.trim="entry.location" name="location">
+          <input type="text" v-if="edit" v-model.trim="entry.location" name="location">
+          <span v-else class="value">{{entry.location}}</span>
         </div>
       </div>
 
       <div class="field">
         <label>Appellation</label>
-        <input v-model="entry.wine.appellation" class="wide">
+        <input v-if="edit" v-model="entry.wine.appellation" class="wide">
+        <span v-else class="value">{{entry.wine.appellation}}</span>
       </div>
 
       <div class="field">
         <label>Producteur</label>
-        <input v-model="entry.wine.producer" class="wide">
+        <input v-if="edit" v-model="entry.wine.producer" class="wide">
+        <span v-else class="value">{{entry.wine.producer}}</span>
       </div>
 
       <div class="field">
         <label>Cuvée</label>
-        <input v-model="entry.wine.name" class="wide">
+        <input v-if="edit" v-model="entry.wine.name" class="wide">
+        <span v-else class="value">{{entry.wine.name}}</span>
       </div>
 
-      <div class="line years">
+      <div class="line years" v-if="edit || entry.wine.year">
         <div class="field">
           <label>Millésime</label>
-          <input v-model.number="entry.wine.year">
+          <input v-if="edit" v-model.number="entry.wine.year">
+          <span v-else class="value">{{entry.wine.year}}</span>
         </div>
 
-        <div class="field">
+        <div class="field" v-if="edit || entry.wine.apogeeStart || entry.wine.apogeeEnd">
           <label>Apogée</label>
           <div class="apogee">
-            <span class="label">de</span>
-            <input v-model.number="entry.wine.apogeeStart">
-            <span class="label">à</span>
-            <input v-model.number="entry.wine.apogeeEnd">
+            <span class="label" v-if="edit || entry.wine.apogeeStart && entry.wine.apogeeEnd">de</span>
+            <input v-if="edit" v-model.number="entry.wine.apogeeStart">
+            <span v-else class="value">{{entry.wine.apogeeStart}}</span>
+            <span class="label" v-if="edit || entry.wine.apogeeStart && entry.wine.apogeeEnd">à</span>
+            <input v-if="edit" v-model.number="entry.wine.apogeeEnd">
+            <span v-else class="value">{{entry.wine.apogeeEnd}}</span>
           </div>
         </div>
       </div>
 
-      <div class="field country">
+      <div class="field country" v-if="edit || entry.wine.country">
         <label>Pays</label>
-        <input v-model="entry.wine.country">
+        <input v-if="edit" v-model="entry.wine.country">
+        <span v-else class="value">{{entry.wine.country}}</span>
       </div>
 
-      <div class="field">
+      <div class="field" v-if="edit || entry.wine.color">
         <label>Couleur</label>
-        <vni-color v-model="entry.wine.color"></vni-color>
+        <vni-color :edit="edit" v-model="entry.wine.color"></vni-color>
       </div>
 
       <div class="field">
@@ -133,9 +152,9 @@ const Entry = Vue.component('vni-entry', {
         <vni-cepages :cepages="entry.wine.cepages"></vni-cepages>
       </div>
 
-      <div class="field">
+      <div class="field" v-if="edit || entry.wine.containing">
         <label>Bouteille</label>
-        <select v-model="entry.wine.containing">
+        <select v-if="edit" v-model="entry.wine.containing">
           <option disabled>Choisissez une contenance</option>
           <option value="0.375">37.5cl</option>
           <option value="0.5">50cl</option>
@@ -149,6 +168,7 @@ const Entry = Vue.component('vni-entry', {
           <option val="15">Nabuchodonosor (15l)</option>
           <option val="18">Melchior (18l)</option>
         </select>
+        <span v-else class="value">{{containingLbl}}</span>
       </div>
 
       <div class="field tags">

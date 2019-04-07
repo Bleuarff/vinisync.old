@@ -17,6 +17,12 @@
       "css": "back",
       "code": 59393,
       "src": "fontawesome"
+    },
+    {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "cancel",
+      "code": 59394,
+      "src": "fontawesome"
     }
   ]
 }

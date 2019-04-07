@@ -44,6 +44,8 @@ const Entry = Vue.component('vni-entry', {
       await db.connected
       try{
         this.entry = await db.getEntry(id)
+        if (this.entry.cepages == null)
+          this.entry.cepages = []
       }
       catch(err){
         console.error(err)
@@ -112,6 +114,11 @@ const Entry = Vue.component('vni-entry', {
       <div class="field">
         <label>Couleur</label>
         <vni-color v-model="entry.wine.color"></vni-color>
+      </div>
+
+      <div class="field">
+        <label>Cépages</label>
+        <vni-cepages :cepages="entry.wine.cepages"></vni-cepages>
       </div>
 
 

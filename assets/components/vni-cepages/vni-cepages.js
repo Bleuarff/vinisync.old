@@ -85,6 +85,13 @@ const Cepages = Vue.component('vni-cepages', {
       setTimeout(() => {
         this.$el.getElementsByClassName('ctnr')[0].click()
       }, 250)
+    },
+
+    // remove cepage from list
+    remove: function(cpg){
+      const idx = this.cepages.indexOf(cpg)
+      if (idx > -1)
+        this.cepages.splice(idx, 1)
     }
 
 
@@ -100,7 +107,11 @@ const Cepages = Vue.component('vni-cepages', {
   template: `
   <div id="cepages-editor">
     <div class="ctnr" v-on:click="startEdit" tabindex="0">
-      <div v-for="cepage in cepages" class="cpg">{{ cepage }}</div>
+      <div v-for="cepage in cepages" class="cpg" v-on:click="$event.currentTarget.classList.toggle('deletable')">
+      {{ cepage }}
+      <span class="icon-cancel" v-on:click="remove(cepage)"></span>
+      </div>
+
       <input id="editor" v-model.trim="newValue" v-show="editing" v-focus="editing" v-on:keyup.enter.esc="addCpg" v-on:blur="stopEdit" tabindex="0"> <!-- -->
       <span id="lenref" tabindex="5">{{ newValue }}</span>
     </div>

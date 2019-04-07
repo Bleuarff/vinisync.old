@@ -1,7 +1,5 @@
 #cepages-editor{
-  @editor-max-width: 500px;
   width: 100%;
-  max-width: @editor-max-width;
   margin-top: .3em;
   margin-bottom: 2em;
 
@@ -10,7 +8,7 @@
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    background: #bdbdbd;
+    background: #e0e0e0;
     width: 100%;
     padding: 5px 5px 20px 5px;
     font-size: .9em;
@@ -26,6 +24,17 @@
     color: white;
     -webkit-user-select: none;
     user-select: none;
+
+    .icon-cancel {
+      display: none;
+    }
+
+    &.deletable .icon-cancel{
+      font-size: 1em;
+      display: inline-block;
+      margin-left: .8em;
+      cursor: pointer;
+    }
   }
 
   .lenref(){
@@ -58,7 +67,6 @@
     position: absolute;
     display: flex;
     width: 100%;
-    max-width: @editor-max-width;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;

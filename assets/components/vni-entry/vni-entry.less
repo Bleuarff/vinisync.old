@@ -5,7 +5,7 @@
   }
 
   .field{
-    
+
   }
 }
 
@@ -15,6 +15,12 @@
 
     .field{
       margin-bottom: .8em;
+
+      &.count{
+        width: 4em;
+
+        input{ width: 100%;}
+      }
     }
 
     .wide{
@@ -30,11 +36,13 @@
       font-size: 13px;
     }
 
-    .years{
+    .line{
       display: flex;
       flex-flow: row;
       justify-content: space-between;
+    }
 
+    .years{
       .apogee{
         display: flex;
         flex-flow: row nowrap;
@@ -53,6 +61,21 @@
         &:first-child{
           padding-left: 0;
         }
+      }
+    }
+
+    .tags{
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      label{
+        display: inline-block;
+        font-size: 1em;
+      }
+
+      .tag{
+        margin: 3px 5px;
       }
     }
 

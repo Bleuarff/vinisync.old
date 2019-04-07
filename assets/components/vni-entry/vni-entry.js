@@ -15,13 +15,13 @@ const Entry = Vue.component('vni-entry', {
           apogeeStart: null,
           apogeeEnd: null,
           cepages: [],
-          containing: '75cl',
+          containing: '0.75',
           color: '',
-          location: null,
           sweet: false,
           sparkling: false
         },
-        count: 6
+        count: 6,
+        location: '',
       }
     }
   },
@@ -74,6 +74,18 @@ const Entry = Vue.component('vni-entry', {
 
       <h1>Entrée</h1>
 
+      <div class="line">
+        <div class="field count">
+          <label>Bouteilles</label>
+          <input v-model.number="entry.count">
+        </div>
+
+        <div class="field">
+          <label>Emplacement</label>
+          <input type="text" v-model.trim="entry.location" name="location">
+        </div>
+      </div>
+
       <div class="field">
         <label>Appellation</label>
         <input v-model="entry.wine.appellation" class="wide">
@@ -89,7 +101,7 @@ const Entry = Vue.component('vni-entry', {
         <input v-model="entry.wine.name" class="wide">
       </div>
 
-      <div class="years">
+      <div class="line years">
         <div class="field">
           <label>Millésime</label>
           <input v-model.number="entry.wine.year">
@@ -119,6 +131,33 @@ const Entry = Vue.component('vni-entry', {
       <div class="field">
         <label>Cépages</label>
         <vni-cepages :cepages="entry.wine.cepages"></vni-cepages>
+      </div>
+
+      <div class="field">
+        <label>Bouteille</label>
+        <select v-model="entry.wine.containing">
+          <option disabled>Choisissez une contenance</option>
+          <option value="0.375">37.5cl</option>
+          <option value="0.5">50cl</option>
+          <option value="0.75">75cl</option>
+          <option value="1.5">Magnum (1.5l)</option>
+          <option value="3">Jéroboam (3l)</option>
+          <option val="4.5">Réhoboam (4.5l)</option>
+          <option val="6">Mathusalem (6l)</option>
+          <option val="9">Salmanazar (9l)</option>
+          <option val="12">Balthazar (12l)</option>
+          <option val="15">Nabuchodonosor (15l)</option>
+          <option val="18">Melchior (18l)</option>
+        </select>
+      </div>
+
+      <div class="field tags">
+        <div class="tag">
+          <input type="checkbox" v-model="entry.wine.sweet" id="sweet"><label for="sweet">Moelleux</label>
+        </div>
+        <div class="tag">
+          <input type="checkbox" v-model="entry.wine.sparking" id="sparkling"><label for="sparkling">Pétillant</label>
+        </div>
       </div>
 
 
